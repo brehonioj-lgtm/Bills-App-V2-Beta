@@ -384,13 +384,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-200 p-4 md:p-8">
       <div className="mx-auto max-w-md px-2 md:px-0 overflow-hidden rounded-[34px] bg-neutral-100 shadow-2xl ring-1 ring-black/5">
-        <div className="bg-[#2554A4] px-4 py-1 text-center">
+        <div className="bg-[#2554A4] px-4 py-3 text-center">
           <h1 className="text-[16px] md:text-[28px] font-bold tracking-tight">
   Monthly Bills Dashboard
 </h1>
         </div>
 
-        <div className="space-y-2 p-2">
+        <div className="space-y-3 p-3">
           <div className="grid grid-cols-2 gap-3">
             <motion.button
               whileTap={{ scale: 0.98 }}
