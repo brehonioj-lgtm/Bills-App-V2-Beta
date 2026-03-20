@@ -127,8 +127,8 @@ function StatusPill({ bill }) {
 
   return (
     <span className="inline-flex min-w-[92px] items-center justify-center rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white">
-      Unpaid
-    </span>
+        Unpaid
+      </span>
   );
 }
 
@@ -298,9 +298,11 @@ export default function App() {
   const totals = useMemo(() => {
     const total = bills.reduce((sum, bill) => sum + bill.amount, 0);
     const paid = bills.filter((bill) => bill.status === 'Paid').reduce((sum, bill) => sum + bill.amount, 0);
-    const dueSoon = bills.filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'dueSoon')
+    const dueSoon = bills
+      .filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'dueSoon')
       .reduce((sum, bill) => sum + bill.amount, 0);
-    const overdue = bills.filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'overdue')
+    const overdue = bills
+      .filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'overdue')
       .reduce((sum, bill) => sum + bill.amount, 0);
     return { total, paid, dueSoon, overdue };
   }, [bills]);
@@ -463,10 +465,7 @@ export default function App() {
                 </Field>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <AppButton
-                    type="submit"
-                    className="bg-neutral-900 text-white"
-                  >
+                  <AppButton type="submit" className="bg-neutral-900 text-white">
                     {editingId ? 'Update Bill' : 'Save Bill'}
                   </AppButton>
                   <AppButton
@@ -518,24 +517,22 @@ export default function App() {
             </div>
           </Card>
 
-          <Card className="p-4">
-  <div className="grid grid-cols-[auto_1fr] items-start gap-3">
-    
-    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
-      <Wallet className="h-7 w-7" />
-    </div>
-
-    <div className="min-w-0">
-      <div className="text-lg font-semibold leading-tight text-neutral-900">
-        Total Bills
-      </div>
-
-      <div className="mt-1 text-[28px] font-bold">
-        {peso(totals.total)}
-      </div>
-    </div>
-
-  </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="p-4">
+              <div className="grid grid-cols-[auto_1fr] items-start gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+                  <Wallet className="h-7 w-7" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-lg font-semibold leading-tight text-neutral-900">
+                    Total Bills
+                  </div>
+                  <div className="mt-1 text-[28px] font-bold leading-tight text-neutral-900">
+                    {peso(totals.total)}
+                  </div>
+                </div>
+              </div>
+            </Card>
 
             <Card className="p-4">
               <div className="grid grid-cols-[auto_1fr] items-start gap-3">
@@ -547,7 +544,7 @@ export default function App() {
                   <div className="mt-1 text-base text-neutral-500">
                     {nextDueSoon ? formatDue(nextDueSoon.dueDate) : '-'}
                   </div>
-                  <div className="mt-1 text-[clamp(24px,6vw,36px)] font-bold leading-none text-neutral-900">
+                  <div className="mt-1 text-[28px] font-bold leading-tight text-neutral-900">
                     {peso(totals.dueSoon)}
                   </div>
                   <div className="mt-1 text-sm text-neutral-400">
@@ -556,7 +553,8 @@ export default function App() {
                 </div>
               </div>
             </Card>
-            
+          </div>
+
           <Card className="p-4">
             <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500 text-white">
@@ -566,7 +564,9 @@ export default function App() {
                 <div className="text-lg font-semibold text-neutral-900">Overdue</div>
               </div>
               <div className="text-right">
-                <div className="text-[clamp(24px,6vw,36px)] font-bold leading-none text-red-700">{peso(totals.overdue)}</div>
+                <div className="text-[28px] font-bold leading-tight text-red-700">
+                  {peso(totals.overdue)}
+                </div>
                 <div className="mt-1 text-base text-red-500">
                   {overdueBills[0] ? `${Math.abs(daysDiff(overdueBills[0].dueDate))} day late` : ''}
                 </div>
@@ -583,11 +583,15 @@ export default function App() {
             <div className="mt-4 grid grid-cols-2 gap-3 rounded-[22px] bg-neutral-50 p-3">
               <div className="min-w-0">
                 <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Remaining</div>
-                <div className="mt-1 break-words text-[clamp(20px,5vw,30px)] font-bold text-neutral-900">{peso(remaining)}</div>
+                <div className="mt-1 text-[24px] font-bold text-neutral-900">
+                  {peso(remaining)}
+                </div>
               </div>
               <div className="text-right">
                 <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Bills Paid</div>
-                <div className="mt-1 text-xl font-bold text-green-700">{bills.filter((b) => b.status === 'Paid').length}</div>
+                <div className="mt-1 text-xl font-bold text-green-700">
+                  {bills.filter((b) => b.status === 'Paid').length}
+                </div>
               </div>
             </div>
           </Card>
@@ -604,7 +608,13 @@ export default function App() {
             {showPaidSection ? (
               paidBills.length ? (
                 paidBills.map((bill) => (
-                  <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
+                  <BillRow
+                    key={bill.id}
+                    bill={bill}
+                    onToggleStatus={toggleStatus}
+                    onEdit={openEdit}
+                    onDelete={deleteBill}
+                  />
                 ))
               ) : (
                 <EmptyState text="No paid bills yet." />
@@ -621,7 +631,13 @@ export default function App() {
             />
             {dueSoonBills.length ? (
               dueSoonBills.slice(0, 2).map((bill) => (
-                <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
+                <BillRow
+                  key={bill.id}
+                  bill={bill}
+                  onToggleStatus={toggleStatus}
+                  onEdit={openEdit}
+                  onDelete={deleteBill}
+                />
               ))
             ) : (
               <EmptyState text="No due soon bills." />
@@ -637,7 +653,13 @@ export default function App() {
             />
             {overdueBills.length ? (
               overdueBills.slice(0, 1).map((bill) => (
-                <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
+                <BillRow
+                  key={bill.id}
+                  bill={bill}
+                  onToggleStatus={toggleStatus}
+                  onEdit={openEdit}
+                  onDelete={deleteBill}
+                />
               ))
             ) : (
               <EmptyState text="No overdue bills." />
@@ -657,7 +679,13 @@ export default function App() {
             {showAllBills ? (
               filteredBills.length ? (
                 filteredBills.map((bill) => (
-                  <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
+                  <BillRow
+                    key={bill.id}
+                    bill={bill}
+                    onToggleStatus={toggleStatus}
+                    onEdit={openEdit}
+                    onDelete={deleteBill}
+                  />
                 ))
               ) : (
                 <EmptyState text="No matching bills found." />
