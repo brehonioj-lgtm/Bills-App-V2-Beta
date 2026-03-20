@@ -384,13 +384,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-200 p-4 md:p-8">
       <div className="mx-auto max-w-md px-2 md:px-0 overflow-hidden rounded-[34px] bg-neutral-100 shadow-2xl ring-1 ring-black/5">
-        <div className="bg-[#2554A4] px-4 py-3 text-center">
+        <div className="bg-[#2554A4] px-4 py-2 text-center">
           <h1 className="text-[18px] md:text-[22px] font-bold text-white tracking-tight">
   Monthly Bills Dashboard
 </h1>
         </div>
 
-        <div className="space-y-3 p-3">
+        <div className="space-y-2 p-2">
           <div className="grid grid-cols-2 gap-3">
             <motion.button
               whileTap={{ scale: 0.98 }}
@@ -414,7 +414,7 @@ export default function App() {
 
           {showForm ? (
             <Card className="p-4">
-              <form className="space-y-3" onSubmit={handleAddOrUpdateBill}>
+              <form className="space-y-2" onSubmit={handleAddOrUpdateBill}>
                 <Field label="Bill Description">
                   <input
                     value={form.title}
@@ -493,7 +493,7 @@ export default function App() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search bills or category"
-                  className="w-full rounded-2xl border border-neutral-300 bg-white py-3 pl-11 pr-10 outline-none focus:border-[#2554A4]"
+                  className="w-full rounded-2xl border border-neutral-300 bg-white py-2 pl-11 pr-10 outline-none focus:border-[#2554A4]"
                 />
                 {search ? (
                   <button
