@@ -518,20 +518,24 @@ export default function App() {
             </div>
           </Card>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="p-4">
-              <div className="grid grid-cols-[auto_1fr] items-start gap-3">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
-                  <Wallet className="h-7 w-7" />
-                </div>
-                <div className="min-w-0">
-                  <div className="text-lg font-semibold leading-tight text-neutral-900">Total Bills</div>
-                  <div <div className="mt-1 text-[28px] font-bold"> {peso(totals.total)}
-                   </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
+          <Card className="p-4">
+  <div className="grid grid-cols-[auto_1fr] items-start gap-3">
+    
+    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
+      <Wallet className="h-7 w-7" />
+    </div>
+
+    <div className="min-w-0">
+      <div className="text-lg font-semibold leading-tight text-neutral-900">
+        Total Bills
+      </div>
+
+      <div className="mt-1 text-[28px] font-bold">
+        {peso(totals.total)}
+      </div>
+    </div>
+
+  </div>
 
             <Card className="p-4">
               <div className="grid grid-cols-[auto_1fr] items-start gap-3">
