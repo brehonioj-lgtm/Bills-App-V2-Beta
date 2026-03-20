@@ -557,7 +557,6 @@ export default function App() {
               </div>
             </Card>
             
-
           <Card className="p-4">
             <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500 text-white">
