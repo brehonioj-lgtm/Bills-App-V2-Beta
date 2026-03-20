@@ -127,8 +127,8 @@ function StatusPill({ bill }) {
 
   return (
     <span className="inline-flex min-w-[92px] items-center justify-center rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white">
-        Unpaid
-      </span>
+      Unpaid
+    </span>
   );
 }
 
@@ -219,7 +219,7 @@ function BillRow({ bill, onToggleStatus, onEdit, onDelete }) {
             onClick={() => onToggleStatus(bill.id)}
             className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-neutral-50 px-3 py-2 text-xs font-semibold text-neutral-700"
           >
-            <CheckCircle2 className="h-10 w-10 md:h-14 md:w-14" />
+            <CheckCircle2 className="h-4 w-4" />
             Toggle
           </button>
           <button
@@ -298,11 +298,9 @@ export default function App() {
   const totals = useMemo(() => {
     const total = bills.reduce((sum, bill) => sum + bill.amount, 0);
     const paid = bills.filter((bill) => bill.status === 'Paid').reduce((sum, bill) => sum + bill.amount, 0);
-    const dueSoon = bills
-      .filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'dueSoon')
+    const dueSoon = bills.filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'dueSoon')
       .reduce((sum, bill) => sum + bill.amount, 0);
-    const overdue = bills
-      .filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'overdue')
+    const overdue = bills.filter((bill) => bill.status === 'Unpaid' && classifyBill(bill) === 'overdue')
       .reduce((sum, bill) => sum + bill.amount, 0);
     return { total, paid, dueSoon, overdue };
   }, [bills]);
@@ -383,99 +381,36 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-neutral-200 p-4 md:p-8">
-      <div className="mx-auto max-w-md overflow-hidden rounded-[34px] bg-neutral-100 shadow-md ring-1 ring-black/5">
-        <div className="bg-[#2554A4] px-4 py-2.5 text-center ">
-          <h1 className="text-[18px] md:text-[22px] font-bold text-white tracking-tight">
-  Monthly Bills Dashboard
-</h1>
+      <div className="mx-auto max-w-md overflow-hidden rounded-[34px] bg-neutral-100 shadow-2xl ring-1 ring-black/5">
+        <div className="bg-[#2554A4] px-6 py-7 text-center text-white">
+          <h1 className="text-[34px] font-bold tracking-tight">Monthly Bills Dashboard</h1>
         </div>
 
-        <div className="space-y-1 p-1.5">
-          <div className="grid grid-cols-1 gap-2">
-  <Card className="p-3">
-    <div className="grid grid-cols-[auto_1fr] items-center gap-3">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
-        <Wallet className="h-6 w-6" />
-      </div>
-      <div className="min-w-0">
-        <div className="text-base font-semibold text-neutral-900">Total Bills</div>
-        <div className="mt-0.5 text-[18px] font-bold leading-tight text-neutral-950">
-          {peso(totals.total)}
-        </div>
-      </div>
-    </div>
-  </Card>
+        <div className="space-y-4 p-4">
+          <div className="grid grid-cols-2 gap-3">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                setShowForm((prev) => !prev);
+                if (showForm) resetForm();
+              }}
+              className="flex w-full items-center justify-center gap-2 rounded-[24px] bg-[#2554A4] px-4 py-4 text-base font-bold text-white shadow-sm"
+            >
+              <Plus className="h-5 w-5" />
+              {editingId ? 'Edit Bill' : 'Add New Bill'}
+            </motion.button>
 
-  <div className="grid grid-cols-2 gap-2">
-    <Card className="p-3">
-      <div className="grid grid-cols-[auto_1fr] items-center gap-3">
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-400 text-white">
-          <AlertTriangle className="h-5 w-5" />
-        </div>
-        <div className="min-w-0">
-          <div className="text-sm font-semibold text-neutral-900">Due Soon</div>
-          <div className="mt-0.5 text-lg font-bold leading-tight text-neutral-950">
-            {peso(totals.dueSoon)}
+            <button
+              onClick={resetDemoData}
+              className="rounded-[24px] border border-neutral-300 bg-white px-4 py-4 text-sm font-bold text-neutral-700 shadow-sm"
+            >
+              Reset Demo Data
+            </button>
           </div>
-          <div className="mt-0.5 text-xs text-neutral-500">
-            {nextDueSoon ? `${formatDue(nextDueSoon.dueDate)} • in ${daysDiff(nextDueSoon.dueDate)} day${daysDiff(nextDueSoon.dueDate) === 1 ? '' : 's'}` : 'No due soon'}
-          </div>
-        </div>
-      </div>
-    </Card>
-
-    <Card className="p-3">
-      <div className="grid grid-cols-[auto_1fr] items-center gap-3">
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-red-500 text-white">
-          <AlertTriangle className="h-5 w-5" />
-        </div>
-        <div className="min-w-0">
-          <div className="text-sm font-semibold text-neutral-900">Overdue</div>
-          <div className="mt-0.5 text-lg font-bold leading-tight text-red-700">
-            {peso(totals.overdue)}
-          </div>
-          <div className="mt-0.5 text-xs text-red-400">
-            {nextOverdue ? `${Math.abs(daysDiff(nextOverdue.dueDate))} day${Math.abs(daysDiff(nextOverdue.dueDate)) === 1 ? '' : 's'} late` : 'No overdue'}
-          </div>
-        </div>
-      </div>
-    </Card>
-  </div>
-
-  <Card className="p-3">
-    <div className="flex items-center justify-between">
-      <div className="text-sm font-semibold text-neutral-900">Progress</div>
-      <div className="text-sm text-neutral-500">{totals.percentPaid}%</div>
-    </div>
-
-    <div className="mt-2 h-3 overflow-hidden rounded-full bg-neutral-200">
-      <div
-        className="h-full rounded-full bg-green-500 transition-all"
-        style={{ width: `${totals.percentPaid}%` }}
-      />
-    </div>
-
-    <div className="mt-3 grid grid-cols-2 gap-2">
-      <div className="rounded-[18px] bg-neutral-50 p-3">
-        <div className="text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
-          Remaining
-        </div>
-        <div className="mt-1 text-xl font-bold text-neutral-950">{peso(totals.remaining)}</div>
-      </div>
-
-      <div className="rounded-[18px] bg-neutral-50 p-3 text-right">
-        <div className="text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
-          Bills Paid
-        </div>
-        <div className="mt-1 text-xl font-bold text-green-600">{totals.paidCount}</div>
-      </div>
-    </div>
-  </Card>
-</div>
 
           {showForm ? (
             <Card className="p-4">
-              <form className="space-y-2" onSubmit={handleAddOrUpdateBill}>
+              <form className="space-y-3" onSubmit={handleAddOrUpdateBill}>
                 <Field label="Bill Description">
                   <input
                     value={form.title}
@@ -528,7 +463,10 @@ export default function App() {
                 </Field>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <AppButton type="submit" className="bg-neutral-900 text-white">
+                  <AppButton
+                    type="submit"
+                    className="bg-neutral-900 text-white"
+                  >
                     {editingId ? 'Update Bill' : 'Save Bill'}
                   </AppButton>
                   <AppButton
@@ -554,7 +492,7 @@ export default function App() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search bills or category"
-                  className="w-full rounded-2xl border border-neutral-300 bg-white py-2 pl-11 pr-10 outline-none focus:border-[#2554A4]"
+                  className="w-full rounded-2xl border border-neutral-300 bg-white py-3 pl-11 pr-10 outline-none focus:border-[#2554A4]"
                 />
                 {search ? (
                   <button
@@ -580,43 +518,41 @@ export default function App() {
             </div>
           </Card>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-  <Card className="p-3">
-    <div className="grid grid-cols-[auto_1fr] items-start gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
-        <Wallet className="h-7 w-7" />
-      </div>
-      <div className="min-w-0">
-        <div className="text-lg font-semibold leading-tight text-neutral-900">
-          Total Bills
-        </div>
-        <div className="mt-2 text-[22px] font-bold leading-tight text-neutral-900 sm:text-[28px]">
-          {peso(totals.total)}
-        </div>
-      </div>
-    </div>
-  </Card>
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="p-4">
+              <div className="grid grid-cols-[auto_1fr] items-start gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+                  <Wallet className="h-7 w-7" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-lg font-semibold leading-tight text-neutral-900">Total Bills</div>
+                  <div className="mt-1 break-words text-[clamp(28px,7vw,40px)] font-bold leading-none text-neutral-900">
+                    {peso(totals.total)}
+                  </div>
+                </div>
+              </div>
+            </Card>
 
-  <Card className="p-4">
-    <div className="grid grid-cols-[auto_1fr] items-start gap-3">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-amber-400 text-white">
-        <AlertTriangle className="h-7 w-7" />
-      </div>
-      <div className="min-w-0">
-        <div className="text-lg font-semibold text-neutral-900">Due Soon</div>
-        <div className="mt-1 text-base text-neutral-500">
-          {nextDueSoon ? formatDue(nextDueSoon.dueDate) : '-'}
-        </div>
-        <div className="mt-2 text-[22px] font-bold leading-tight text-neutral-900 sm:text-[28px]">
-          {peso(totals.dueSoon)}
-        </div>
-        <div className="mt-1 text-sm text-neutral-400">
-          {nextDueSoon ? `• in ${daysDiff(nextDueSoon.dueDate)} days` : ''}
-        </div>
-      </div>
-    </div>
-  </Card>
-</div>
+            <Card className="p-4">
+              <div className="grid grid-cols-[auto_1fr] items-start gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-amber-400 text-white">
+                  <AlertTriangle className="h-7 w-7" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-lg font-semibold text-neutral-900">Due Soon</div>
+                  <div className="mt-1 text-base text-neutral-500">
+                    {nextDueSoon ? formatDue(nextDueSoon.dueDate) : '-'}
+                  </div>
+                  <div className="mt-1 text-[clamp(24px,6vw,36px)] font-bold leading-none text-neutral-900">
+                    {peso(totals.dueSoon)}
+                  </div>
+                  <div className="mt-1 text-sm text-neutral-400">
+                    {nextDueSoon ? `• in ${daysDiff(nextDueSoon.dueDate)} days` : ''}
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
 
           <Card className="p-4">
             <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
@@ -627,9 +563,7 @@ export default function App() {
                 <div className="text-lg font-semibold text-neutral-900">Overdue</div>
               </div>
               <div className="text-right">
-                <div className="text-[28px] font-bold leading-tight text-red-700">
-                  {peso(totals.overdue)}
-                </div>
+                <div className="text-[clamp(24px,6vw,36px)] font-bold leading-none text-red-700">{peso(totals.overdue)}</div>
                 <div className="mt-1 text-base text-red-500">
                   {overdueBills[0] ? `${Math.abs(daysDiff(overdueBills[0].dueDate))} day late` : ''}
                 </div>
@@ -646,15 +580,11 @@ export default function App() {
             <div className="mt-4 grid grid-cols-2 gap-3 rounded-[22px] bg-neutral-50 p-3">
               <div className="min-w-0">
                 <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Remaining</div>
-                <div className="mt-1 text-[24px] font-bold text-neutral-900">
-                  {peso(remaining)}
-                </div>
+                <div className="mt-1 break-words text-[clamp(20px,5vw,30px)] font-bold text-neutral-900">{peso(remaining)}</div>
               </div>
               <div className="text-right">
                 <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Bills Paid</div>
-                <div className="mt-1 text-xl font-bold text-green-700">
-                  {bills.filter((b) => b.status === 'Paid').length}
-                </div>
+                <div className="mt-1 text-xl font-bold text-green-700">{bills.filter((b) => b.status === 'Paid').length}</div>
               </div>
             </div>
           </Card>
@@ -671,13 +601,7 @@ export default function App() {
             {showPaidSection ? (
               paidBills.length ? (
                 paidBills.map((bill) => (
-                  <BillRow
-                    key={bill.id}
-                    bill={bill}
-                    onToggleStatus={toggleStatus}
-                    onEdit={openEdit}
-                    onDelete={deleteBill}
-                  />
+                  <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
                 ))
               ) : (
                 <EmptyState text="No paid bills yet." />
@@ -694,13 +618,7 @@ export default function App() {
             />
             {dueSoonBills.length ? (
               dueSoonBills.slice(0, 2).map((bill) => (
-                <BillRow
-                  key={bill.id}
-                  bill={bill}
-                  onToggleStatus={toggleStatus}
-                  onEdit={openEdit}
-                  onDelete={deleteBill}
-                />
+                <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
               ))
             ) : (
               <EmptyState text="No due soon bills." />
@@ -716,13 +634,7 @@ export default function App() {
             />
             {overdueBills.length ? (
               overdueBills.slice(0, 1).map((bill) => (
-                <BillRow
-                  key={bill.id}
-                  bill={bill}
-                  onToggleStatus={toggleStatus}
-                  onEdit={openEdit}
-                  onDelete={deleteBill}
-                />
+                <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
               ))
             ) : (
               <EmptyState text="No overdue bills." />
@@ -742,13 +654,7 @@ export default function App() {
             {showAllBills ? (
               filteredBills.length ? (
                 filteredBills.map((bill) => (
-                  <BillRow
-                    key={bill.id}
-                    bill={bill}
-                    onToggleStatus={toggleStatus}
-                    onEdit={openEdit}
-                    onDelete={deleteBill}
-                  />
+                  <BillRow key={bill.id} bill={bill} onToggleStatus={toggleStatus} onEdit={openEdit} onDelete={deleteBill} />
                 ))
               ) : (
                 <EmptyState text="No matching bills found." />
