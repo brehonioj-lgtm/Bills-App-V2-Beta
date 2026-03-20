@@ -383,8 +383,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-neutral-200 p-4 md:p-8">
-      <div className="mx-auto max-w-md rounded-[34px] bg-neutral-100 shadow-md ring-1 ring-black/5">
-        <div className="overflow-hidden rounded-[34px] ">
+      <div className="mx-auto max-w-md overflow-hidden rounded-[34px] bg-neutral-100 shadow-md ring-1 ring-black/5">
         <div className="bg-[#2554A4] px-4 py-2.5 text-center ">
           <h1 className="text-[18px] md:text-[22px] font-bold text-white tracking-tight">
   Monthly Bills Dashboard
