@@ -519,10 +519,10 @@ export default function App() {
             </div>
           </Card>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-  <Card className="p-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+  <Card className="p-3">
     <div className="grid grid-cols-[auto_1fr] items-start gap-3">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
         <Wallet className="h-7 w-7" />
       </div>
       <div className="min-w-0">
