@@ -526,8 +526,8 @@ export default function App() {
                 </div>
                 <div className="min-w-0">
                   <div className="text-lg font-semibold leading-tight text-neutral-900">Total Bills</div>
-                  <div className="mt-1 break-words text-[clamp(28px,7vw,40px)] font-bold leading-none text-neutral-900">
-                    {peso(totals.total)}
+                  <div <div className="mt-1 text-[28px] font-bold"> {peso(totals.total)}
+                   </div>
                   </div>
                 </div>
               </div>
