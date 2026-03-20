@@ -390,7 +390,7 @@ export default function App() {
 </h1>
         </div>
 
-        <div className="space-y-2 p-2">
+        <div className="space-y-1 p-1.5">
           <div className="grid grid-cols-2 gap-3">
             <motion.button
               whileTap={{ scale: 0.98 }}
