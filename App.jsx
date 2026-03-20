@@ -385,12 +385,12 @@ export default function App() {
     <div className="min-h-screen bg-neutral-200 p-4 md:p-8">
       <div className="mx-auto max-w-md px-2 md:px-0 overflow-hidden rounded-[34px] bg-neutral-100 shadow-2xl ring-1 ring-black/5">
         <div className="bg-[#2554A4] px-4 py-1 text-center">
-          <h1 className="text-[22px] md:text-[28px] font-bold tracking-tight">
+          <h1 className="text-[16px] md:text-[28px] font-bold tracking-tight">
   Monthly Bills Dashboard
 </h1>
         </div>
 
-        <div className="space-y-4 p-4">
+        <div className="space-y-2 p-2">
           <div className="grid grid-cols-2 gap-3">
             <motion.button
               whileTap={{ scale: 0.98 }}
@@ -398,7 +398,7 @@ export default function App() {
                 setShowForm((prev) => !prev);
                 if (showForm) resetForm();
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-[24px] bg-[#2554A4] px-3 py-2.5 text-base font-bold text-white shadow-sm"
+              className="flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#2554A4] px-3 py-2.5 text-sm font-bold text-white shadow-sm"
             >
               <Plus className="h-5 w-5" />
               {editingId ? 'Edit Bill' : 'Add New Bill'}
