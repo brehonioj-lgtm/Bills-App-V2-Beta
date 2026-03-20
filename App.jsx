@@ -556,7 +556,7 @@ export default function App() {
                 </div>
               </div>
             </Card>
-          </div>
+            
 
           <Card className="p-4">
             <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
