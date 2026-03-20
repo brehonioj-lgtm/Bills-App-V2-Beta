@@ -219,7 +219,7 @@ function BillRow({ bill, onToggleStatus, onEdit, onDelete }) {
             onClick={() => onToggleStatus(bill.id)}
             className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-neutral-50 px-3 py-2 text-xs font-semibold text-neutral-700"
           >
-            <CheckCircle2 className="h-4 w-4" />
+            <CheckCircle2 className="h-10 w-10 md:h-14 md:w-14" />
             Toggle
           </button>
           <button
