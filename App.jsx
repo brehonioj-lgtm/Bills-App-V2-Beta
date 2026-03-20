@@ -398,7 +398,7 @@ export default function App() {
                 setShowForm((prev) => !prev);
                 if (showForm) resetForm();
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-[24px] bg-[#2554A4] px-4 py-4 text-base font-bold text-white shadow-sm"
+              className="flex w-full items-center justify-center gap-2 rounded-[24px] bg-[#2554A4] px-3 py-2.5 text-base font-bold text-white shadow-sm"
             >
               <Plus className="h-5 w-5" />
               {editingId ? 'Edit Bill' : 'Add New Bill'}
