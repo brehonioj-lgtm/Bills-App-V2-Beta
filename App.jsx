@@ -391,26 +391,87 @@ export default function App() {
         </div>
 
         <div className="space-y-1 p-1.5">
-          <div className="grid grid-cols-2 gap-3">
-            <motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={() => {
-                setShowForm((prev) => !prev);
-                if (showForm) resetForm();
-              }}
-              className="flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#2554A4] px-3 py-2.5 text-sm font-bold text-white shadow-sm"
-            >
-              <Plus className="h-5 w-5" />
-              {editingId ? 'Edit Bill' : 'Add New Bill'}
-            </motion.button>
+          <div className="grid grid-cols-1 gap-2">
+  <Card className="p-3">
+    <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
+        <Wallet className="h-6 w-6" />
+      </div>
+      <div className="min-w-0">
+        <div className="text-base font-semibold text-neutral-900">Total Bills</div>
+        <div className="mt-0.5 text-[18px] font-bold leading-tight text-neutral-950">
+          {peso(totals.total)}
+        </div>
+      </div>
+    </div>
+  </Card>
 
-            <button
-              onClick={resetDemoData}
-              className="rounded-[24px] border border-neutral-300 bg-white px-4 py-4 text-sm font-bold text-neutral-700 shadow-sm"
-            >
-              Reset Demo Data
-            </button>
+  <div className="grid grid-cols-2 gap-2">
+    <Card className="p-3">
+      <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-400 text-white">
+          <AlertTriangle className="h-5 w-5" />
+        </div>
+        <div className="min-w-0">
+          <div className="text-sm font-semibold text-neutral-900">Due Soon</div>
+          <div className="mt-0.5 text-lg font-bold leading-tight text-neutral-950">
+            {peso(totals.dueSoon)}
           </div>
+          <div className="mt-0.5 text-xs text-neutral-500">
+            {nextDueSoon ? `${formatDue(nextDueSoon.dueDate)} • in ${daysDiff(nextDueSoon.dueDate)} day${daysDiff(nextDueSoon.dueDate) === 1 ? '' : 's'}` : 'No due soon'}
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <Card className="p-3">
+      <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-red-500 text-white">
+          <AlertTriangle className="h-5 w-5" />
+        </div>
+        <div className="min-w-0">
+          <div className="text-sm font-semibold text-neutral-900">Overdue</div>
+          <div className="mt-0.5 text-lg font-bold leading-tight text-red-700">
+            {peso(totals.overdue)}
+          </div>
+          <div className="mt-0.5 text-xs text-red-400">
+            {nextOverdue ? `${Math.abs(daysDiff(nextOverdue.dueDate))} day${Math.abs(daysDiff(nextOverdue.dueDate)) === 1 ? '' : 's'} late` : 'No overdue'}
+          </div>
+        </div>
+      </div>
+    </Card>
+  </div>
+
+  <Card className="p-3">
+    <div className="flex items-center justify-between">
+      <div className="text-sm font-semibold text-neutral-900">Progress</div>
+      <div className="text-sm text-neutral-500">{totals.percentPaid}%</div>
+    </div>
+
+    <div className="mt-2 h-3 overflow-hidden rounded-full bg-neutral-200">
+      <div
+        className="h-full rounded-full bg-green-500 transition-all"
+        style={{ width: `${totals.percentPaid}%` }}
+      />
+    </div>
+
+    <div className="mt-3 grid grid-cols-2 gap-2">
+      <div className="rounded-[18px] bg-neutral-50 p-3">
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
+          Remaining
+        </div>
+        <div className="mt-1 text-xl font-bold text-neutral-950">{peso(totals.remaining)}</div>
+      </div>
+
+      <div className="rounded-[18px] bg-neutral-50 p-3 text-right">
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
+          Bills Paid
+        </div>
+        <div className="mt-1 text-xl font-bold text-green-600">{totals.paidCount}</div>
+      </div>
+    </div>
+  </Card>
+</div>
 
           {showForm ? (
             <Card className="p-4">
