@@ -1,0 +1,23 @@
+{
+  "name": "Monthly Bills Dashboard",
+  "short_name": "Bills App",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e5e5e5",
+  "theme_color": "#2554A4",
+  "description": "Track monthly bills, due soon, overdue, and paid bills.",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
