@@ -385,7 +385,9 @@ export default function App() {
     <div className="min-h-screen bg-neutral-200 p-4 md:p-8">
       <div className="mx-auto max-w-md overflow-hidden rounded-[34px] bg-neutral-100 shadow-2xl ring-1 ring-black/5">
         <div className="bg-[#2554A4] px-6 py-7 text-center text-white">
-          <h1 className="text-[34px] font-bold tracking-tight">Monthly Bills Dashboard</h1>
+          <h1 className="text-[26px] md:text-[34px] font-bold tracking-tight">
+  Monthly Bills Dashboard
+</h1>
         </div>
 
         <div className="space-y-4 p-4">
